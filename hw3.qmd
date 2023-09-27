@@ -1,0 +1,72 @@
+---
+title: "MA [46]15 Homework 3"
+author: "**`[==[`** Your Name **`]==]`**"
+format: gfm
+---
+
+
+## Question 1
+
+
+My work is to perform a preliminary analysis of the Covid data to ascertain when different types of data were collected.
+
+**`[==[`** 
+Create a new chunk labelled q1 that reads in the data from the file "covid_data.csv" to a variable named `cov_df`.
+When you first read it in, you will discover that the column types might be not be what you expected.
+Use the `na` parameter in `read_csv` to fix this and specify the `col_types` parameter to avoid any output.
+Verify that there are no other issues by running `problems()` and showing that it is empty.
+**`]==]`**
+
+
+
+## Question 2
+
+**`[==[`** 
+Create a new q2 chunk, and for each state, compute the number of reporting days where all 9 race categories were reported and arrange this table by decreasing number of days.
+You may omit states where this never occured.
+Briefly describe the table.
+**`]==]`**
+
+
+## Question 3
+
+
+**`[==[`**
+We want to determine that once states started reporting, they then consistently did so.
+We're only going to look at rows from the "Total" race category, with date on a Sunday (`wday(date) == 1`), and where the Cases number is not missing.
+(What other days of the week are in this data?)
+After grouping by state,keep only rows that **don't** satisfy either of these conditions:
+
+* The row is the first row for the state.
+* The row appears directly after a row from one week prior.
+    * You'll need to use the `lag` function and the `weeks` function to determine this.
+
+Do this in a chunk labelled q3 and verify that there is only one remaining row.
+Print the date and state for that row.
+**`]==]`**
+
+
+
+
+## Question 4
+
+
+**`[==[`** 
+For each combination of state and race category, find the first month when the Cases column is not missing.
+Make a bar chart showing the number of states whose first day reporting cases was in each month, faceted by race.
+Do the same for Hosp (instead of Cases).
+Improve the plots by adjusting the labels and adding a title.
+Make sure to remove the line `#| eval: false` from this chunk. (What does it do?)
+**`]==]`**
+
+```{r q4}
+#| eval: false
+cov_df |> 
+  summarize(first_non_na = month(first(date), label = TRUE))
+```
+
+
+**`[==[`**
+Comment on when most states started reporting cases and hospitalalizations. Are there any differences you notice between the different race categories?
+**`]==]`**
+
